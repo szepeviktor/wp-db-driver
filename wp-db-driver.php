@@ -39,7 +39,7 @@ class WP_DB_Driver_Plugin {
 	 */
 	public static function deactivate() {
 		if( file_exists( WP_CONTENT_DIR . '/db.php' ) ) {
-			$crc1 = md5_file( dirname( __FILE__ ) . '/wp-content/db.php' );
+			$crc1 = md5_file( dirname( __FILE__ ) . '/wp-content/db-driver.php' );
 			$crc2 = md5_file( WP_CONTENT_DIR . '/db.php' );
 			if ( $crc1 === $crc2 ) {
 				if ( false === @unlink( WP_CONTENT_DIR . '/db.php' ) ) {
@@ -55,7 +55,7 @@ class WP_DB_Driver_Plugin {
 	public static function uninstall() {
 		global $wp_filesystem;
 		if( file_exists( WP_CONTENT_DIR . '/db.php' ) ) {
-			$crc1 = md5_file( dirname( __FILE__ ) . '/wp-content/db.php' );
+			$crc1 = md5_file( dirname( __FILE__ ) . '/wp-content/db-driver.php' );
 			$crc2 = md5_file( WP_CONTENT_DIR . '/db.php' );
 			if ( $crc1 === $crc2 ) {
 				$wp_filesystem->delete( $wp_filesystem->wp_content_dir() . '/db.php' );
@@ -124,7 +124,7 @@ class WP_DB_Driver_Plugin {
 
 				// Install
 				if ( $do_install ) {
-					if ( $wp_filesystem->put_contents( $wp_filesystem->wp_content_dir() . '/db.php' , file_get_contents( dirname( __FILE__ ) .'/wp-content/db.php' ), FS_CHMOD_FILE ) ) {
+					if ( $wp_filesystem->put_contents( $wp_filesystem->wp_content_dir() . '/db.php' , file_get_contents( dirname( __FILE__ ) .'/wp-content/db-driver.php' ), FS_CHMOD_FILE ) ) {
 						echo '<div class="updated"><p><strong>' . __( 'db.php has been installed.', 'wp-db-driver' ) .'</strong></p></div>';
 					} else {
 						echo '<div class="error"><p><strong>' . __( "db.php couldn't be installed. Please try is manually", 'wp-db-driver' ) .'</strong></p></div>';
@@ -145,7 +145,7 @@ class WP_DB_Driver_Plugin {
 		echo '<div class="tool-box"><h3 class="title">' . __( 'Current driver', 'wp-db-driver' ) . '</h3></div>';
 
 		if( file_exists( WP_CONTENT_DIR . '/db.php' ) ) {
-			$crc1 = md5_file( dirname( __FILE__ ) . '/wp-content/db.php' );
+			$crc1 = md5_file( dirname( __FILE__ ) . '/wp-content/db-driver.php' );
 			$crc2 = md5_file( WP_CONTENT_DIR . '/db.php' );
 
 			if ( $crc1 === $crc2 ) {
